@@ -95,27 +95,26 @@
             width: 45%;
         }
     </style>
+
     <script>
-        function scaleImage() {
+        function convertToPainting() {
             const originalImage = document.getElementById("original-image");
             const scaledImage = document.getElementById("scaled-image");
-            const canvas = document.getElementById("canvas");
+            const canvas = document.createElement("canvas");
             const widthInput = document.getElementById("width-input").value;
             const heightInput = document.getElementById("height-input").value;
 
             const width = originalImage.width;
             const height = originalImage.height;
 
-            const scaleWidth = width / (widthInput * 16);
-            const scaleHeight = height / (heightInput * 16);
-
-            canvas.width = width / scaleWidth;
-            canvas.height = height / scaleHeight;
-
+            canvas.width = widthInput * 16;
+            canvas.height = heightInput * 16;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
-            
-            scaledImage.src = canvas.toDataURL();
+
+            const scaleCanvas = upscaleImage(canvas, widthInput, heightInput);
+
+            scaledImage.src = scaleCanvas.toDataURL();
         }
 
         function loadImage(event) {
@@ -130,15 +129,29 @@
             reader.readAsDataURL(input.files[0]);
         }
 
+        function upscaleImage(canvas, widthInput, heightInput) {
+            const scaledCanvas = document.createElement("canvas");
+            const ctx = scaledCanvas.getContext("2d");
+            scaledCanvas.width = widthInput * 128;
+            scaledCanvas.height = heightInput * 128;
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(canvas, 0, 0, scaledCanvas.width, scaledCanvas.height);
+            return scaledCanvas;
+        }
+
         function downloadImage() {
-            var img = document.getElementById('scaled-image');
+            var img = document.getElementById("scaled-image");
 
             fetch(img.src)
-                .then(response => response.blob())
-                .then(blob => {
-                    var link = document.createElement('a');
+                .then((response) => response.blob())
+                .then((blob) => {
+                    var link = document.createElement("a");
                     link.href = URL.createObjectURL(blob);
-                    var imgName = document.getElementById("width-input").value + 'x' + document.getElementById("height-input").value + '.jpg';
+                    var imgName =
+                        document.getElementById("width-input").value +
+                        "x" +
+                        document.getElementById("height-input").value +
+                        ".jpg";
                     link.download = imgName;
                     link.click();
                 });
@@ -163,7 +176,7 @@
             <input type="number" id="height-input" min="1" placeholder="Enter height" />
         </div>
         <div class="button-container">
-            <button onclick="scaleImage()">Scale Image</button>
+            <button onclick="convertToPainting()">Convert</button>
         </div>
         <div class="image-container">
             <div class="image-wrapper">
@@ -176,7 +189,7 @@
                     <img id="scaled-image" />
                     <br>
                     <div class="button-container">
-                    <button onclick="downloadImage()">Download</button>
+                        <button onclick="downloadImage()">Download</button>
                     </div>
                 </div>
             </div>
