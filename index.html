@@ -114,8 +114,7 @@
 
             const ctx = canvas.getContext("2d");
             ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
-
-
+            
             scaledImage.src = canvas.toDataURL();
         }
 
@@ -139,7 +138,8 @@
                 .then(blob => {
                     var link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
-                    link.download = 'image.jpg';
+                    var imgName = document.getElementById("width-input").value + 'x' + document.getElementById("height-input").value + '.jpg';
+                    link.download = imgName;
                     link.click();
                 });
         }
