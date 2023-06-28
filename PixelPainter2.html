@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pixel Painter 2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F2EFE9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #303030;
+            margin-top: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-input {
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            flex: 0 0 70px;
+            font-size: 18px;
+            color: #303030;
+            margin-right: 10px;
+        }
+
+        .input-group input[type="number"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #303030;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .button-container button:hover {
+            background-color: #555555;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: 100;
+            width: 100;
+            display: auto;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container .image-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .image-container .image-wrapper img {
+            width: 45%;
+        }
+    </style>
+    <script>
+        function scaleImage() {
+            const originalImage = document.getElementById("original-image");
+            const scaledImage = document.getElementById("scaled-image");
+            const canvas = document.getElementById("canvas");
+            const widthInput = document.getElementById("width-input").value;
+            const heightInput = document.getElementById("height-input").value;
+
+            const width = originalImage.width;
+            const height = originalImage.height;
+
+            const scaleWidth = width / (widthInput * 16);
+            const scaleHeight = height / (heightInput * 16);
+
+            canvas.width = width / scaleWidth;
+            canvas.height = height / scaleHeight;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+
+
+            scaledImage.src = canvas.toDataURL();
+        }
+
+        function loadImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const img = document.getElementById("original-image");
+                img.src = reader.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        function downloadImage() {
+            var img = document.getElementById('scaled-image');
+
+            fetch(img.src)
+                .then(response => response.blob())
+                .then(blob => {
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'image.jpg';
+                    link.click();
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Pixel Painter 2</h1>
+        <div class="image-input">
+            <label for="image-file">Select an Image:</label>
+            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)" />
+        </div>
+        <h3><b>Select Painting Dimensions:</b></h3>
+        <div class="input-group">
+            <label for="width-input">Block Width:</label>
+            <input type="number" id="width-input" min="1" placeholder="Enter width" />
+        </div>
+        <div class="input-group">
+            <label for="height-input">Block Height:</label>
+            <input type="number" id="height-input" min="1" placeholder="Enter height" />
+        </div>
+        <div class="button-container">
+            <button onclick="scaleImage()">Scale Image</button>
+        </div>
+        <div class="image-container">
+            <div class="image-wrapper">
+                <div>
+                    <h4>Original Image</h4>
+                    <img id="original-image" />
+                </div>
+                <div>
+                    <h4>Scaled Image</h4>
+                    <img id="scaled-image" />
+                    <br>
+                    <div class="button-container">
+                    <button onclick="downloadImage()">Download</button>
+                    </div>
+                </div>
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+    </div>
+</body>
+
+</html>
