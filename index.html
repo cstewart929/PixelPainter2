@@ -104,9 +104,6 @@
             const widthInput = document.getElementById("width-input").value;
             const heightInput = document.getElementById("height-input").value;
 
-            const width = originalImage.width;
-            const height = originalImage.height;
-
             canvas.width = widthInput * 16;
             canvas.height = heightInput * 16;
             const ctx = canvas.getContext("2d");
@@ -115,6 +112,7 @@
             const scaleCanvas = upscaleImage(canvas, widthInput, heightInput);
 
             scaledImage.src = scaleCanvas.toDataURL();
+            document.getElementById("download-button").hidden = false;
         }
 
         function loadImage(event) {
@@ -189,7 +187,7 @@
                     <img id="scaled-image" />
                     <br>
                     <div class="button-container">
-                        <button onclick="downloadImage()">Download</button>
+                        <button onclick="downloadImage()" id="download-button" hidden>Download</button>
                     </div>
                 </div>
             </div>
