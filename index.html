@@ -3,7 +3,8 @@
 
 <head>
     <title>Pixel Painter 2</title>
-    <link rel="icon" type="image-x-icon" href="https://github.com/smorebison/PixelPainter2/assets/111925346/ed467d0e-c477-4b7b-9add-13e2611e7f27">
+    <link rel="icon" type="image-x-icon"
+        href="https://github.com/smorebison/PixelPainter2/assets/111925346/ed467d0e-c477-4b7b-9add-13e2611e7f27">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,6 +18,15 @@
             font-size: 32px;
             color: #303030;
             margin-top: 0;
+            margin-bottom: 1px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 12px;
+            color: #424242;
+            margin-top: 1px;
+            margin-bottom: 25px;
         }
 
         .container {
@@ -29,7 +39,8 @@
         }
 
         .image-input {
-            text-align: center;
+            text-align: left;
+            font-size: 20px;
             margin-bottom: 20px;
         }
 
@@ -99,6 +110,10 @@
 
     <script>
         function convertToPainting() {
+            //Check if inputs are greater than 16
+            if (document.getElementById("width-input").value > 16 || document.getElementById("height-input").value > 16) {
+                return;
+            };
             const originalImage = document.getElementById("original-image");
             const scaledImage = document.getElementById("scaled-image");
             const canvas = document.createElement("canvas");
@@ -147,7 +162,10 @@
                 .then((blob) => {
                     var link = document.createElement("a");
                     link.href = URL.createObjectURL(blob);
+                    var trimmedFileName = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "")
                     var imgName =
+                        trimmedFileName +
+                        "_" +
                         document.getElementById("width-input").value +
                         "x" +
                         document.getElementById("height-input").value +
@@ -162,33 +180,33 @@
 <body>
     <div class="container">
         <h1>Pixel Painter 2</h1>
+        <h2>by Blanc</h2>
         <div class="image-input">
             <label for="image-file">Select an Image:</label>
-            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)"/>
+            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)" />
         </div>
         <h3><b>Select Painting Dimensions (Max of 16):</b></h3>
         <form>
             <div class="input-group">
-            <label for="width-input">Block Width:</label>
-            <input type="number" id="width-input" min="1" max="16" placeholder="Enter width"/>
+                <label for="width-input">Block Width:</label>
+                <input type="number" id="width-input" min="1" max="16" placeholder="Enter width"
+                    onchange="convertToPainting()" />
             </div>
             <div class="input-group">
-            <label for="height-input">Block Height:</label>
-            <input type="number" id="height-input" min="1" max="16" placeholder="Enter height"/>
+                <label for="height-input">Block Height:</label>
+                <input type="number" id="height-input" min="1" max="16" placeholder="Enter height"
+                    onchange="convertToPainting()" />
             </div>
         </form>
-        <div class="button-container">
-            <button onclick="convertToPainting()" hidden id="convert-button">Convert</button>
-        </div>
         <div class="image-container">
             <div class="image-wrapper">
                 <div>
                     <h4>Original Image</h4>
-                    <img id="original-image"/>
+                    <img id="original-image" />
                 </div>
                 <div>
-                    <h4>Scaled Image</h4>
-                    <img id="scaled-image"/>
+                    <h4>Painting</h4>
+                    <img id="scaled-image" />
                     <div class="button-container">
                         <br>
                         <button onclick="downloadImage()" id="download-button" hidden>Download Painting</button>
