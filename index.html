@@ -81,7 +81,7 @@
             max-width: 100%;
             height: auto;
             width: auto;
-            display: auto;
+            display: flex;
             margin: 0 auto;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -164,17 +164,19 @@
         <h1>Pixel Painter 2</h1>
         <div class="image-input">
             <label for="image-file">Select an Image:</label>
-            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)" />
+            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)"/>
         </div>
-        <h3><b>Select Painting Dimensions:</b></h3>
-        <div class="input-group">
+        <h3><b>Select Painting Dimensions (Max of 16):</b></h3>
+        <form>
+            <div class="input-group">
             <label for="width-input">Block Width:</label>
-            <input type="number" id="width-input" min="1" placeholder="Enter width" />
-        </div>
-        <div class="input-group">
+            <input type="number" id="width-input" min="1" max="16" placeholder="Enter width"/>
+            </div>
+            <div class="input-group">
             <label for="height-input">Block Height:</label>
-            <input type="number" id="height-input" min="1" placeholder="Enter height" />
-        </div>
+            <input type="number" id="height-input" min="1" max="16" placeholder="Enter height"/>
+            </div>
+        </form>
         <div class="button-container">
             <button onclick="convertToPainting()" hidden id="convert-button">Convert</button>
         </div>
@@ -182,11 +184,11 @@
             <div class="image-wrapper">
                 <div>
                     <h4>Original Image</h4>
-                    <img id="original-image" />
+                    <img id="original-image"/>
                 </div>
                 <div>
                     <h4>Scaled Image</h4>
-                    <img id="scaled-image" />
+                    <img id="scaled-image"/>
                     <div class="button-container">
                         <br>
                         <button onclick="downloadImage()" id="download-button" hidden>Download Painting</button>
