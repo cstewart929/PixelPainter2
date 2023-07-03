@@ -152,7 +152,10 @@
                 .then((blob) => {
                     var link = document.createElement("a");
                     link.href = URL.createObjectURL(blob);
+                    var trimmedFileName = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "")
                     var imgName =
+                        trimmedFileName +
+                        "_" +
                         document.getElementById("width-input").value +
                         "x" +
                         document.getElementById("height-input").value +
