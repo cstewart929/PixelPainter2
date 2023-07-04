@@ -109,24 +109,28 @@
 
     <script>
         function convertToPainting() {
-            //Check if inputs are greater than 16
-            if (document.getElementById("width-input").value > 16 || document.getElementById("height-input").value > 16) {
-                return;
-            };
-            const originalImage = document.getElementById("original-image");
-            const scaledImage = document.getElementById("scaled-image");
-            const canvas = document.createElement("canvas");
+
             const widthInput = document.getElementById("width-input").value;
             const heightInput = document.getElementById("height-input").value;
 
+            if (1 > widthInput || widthInput > 16) {
+                return;
+            };
+            if (1 > heightInput || heightInput > 16) {
+                return;
+            };
+
+            const originalImage = document.getElementById("original-image");
+            const scaledImage = document.getElementById("scaled-image");
+
+            const canvas = document.createElement("canvas");
             canvas.width = widthInput * 16;
             canvas.height = heightInput * 16;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
 
-            const scaleCanvas = upscaleImage(canvas, widthInput, heightInput);
-
-            scaledImage.src = scaleCanvas.toDataURL();
+            const scaledCanvas = upscaleImage(canvas, widthInput, heightInput);
+            scaledImage.src = scaledCanvas.toDataURL();
             document.getElementById("download-button").hidden = false;
         }
 
@@ -160,9 +164,9 @@
                 .then((blob) => {
                     var link = document.createElement("a");
                     link.href = URL.createObjectURL(blob);
-                    var trimmedFileName = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "")
+                    var trimmedFilename = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "")
                     var imgName =
-                        trimmedFileName +
+                        trimmedFilename +
                         "_" +
                         document.getElementById("width-input").value +
                         "x" +
