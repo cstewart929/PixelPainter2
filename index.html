@@ -188,7 +188,7 @@
             <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)" />
         </div>
         <h3><b>Select Painting Dimensions (Max of 16):</b></h3>
-        <form>
+        <form id="dimension-input" autocomplete="off">
             <div class="input-group">
                 <label for="width-input">Block Width:</label>
                 <input type="number" id="width-input" min="1" max="16" placeholder="Enter width"
