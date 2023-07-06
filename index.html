@@ -7,28 +7,33 @@
     <link rel="stylesheet" href="styles.css">
 
     <script>
+        let widthInput;
+        let heightInput;
+
+        function validDimensions() {
+            widthInput = parseInt(document.getElementById("width-input").value);
+            heightInput = parseInt(document.getElementById("height-input").value);
+
+            const validWidth = 1 <= widthInput && widthInput <= 16;
+            const validHeight = 1 <= heightInput && heightInput <= 16;
+
+            return validWidth && validHeight;
+        }
+
         function convertToPainting() {
-
-            const widthInput = document.getElementById("width-input").value;
-            const heightInput = document.getElementById("height-input").value;
-
-            if (1 > widthInput || widthInput > 16) {
+            if (!validDimensions()) {
                 return;
-            };
-            if (1 > heightInput || heightInput > 16) {
-                return;
-            };
+            }
 
             const originalImage = document.getElementById("original-image");
-            const scaledImage = document.getElementById("scaled-image");
-
+            const scaledImage = document.getElementById("painting");
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
             canvas.width = widthInput * 16;
             canvas.height = heightInput * 16;
             ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
 
-            const scaledCanvas = upscaleImage(canvas, widthInput, heightInput);
+            const scaledCanvas = upscaleImage(canvas);
             scaledImage.src = scaledCanvas.toDataURL();
             document.getElementById("download-button").hidden = false;
         }
@@ -40,42 +45,51 @@
             reader.onload = function () {
                 const img = document.getElementById("original-image");
                 img.src = reader.result;
+                img.onload = function () {
+                    if (validDimensions()) {
+                        convertToPainting();
+                    }
+                };
             };
-
             reader.readAsDataURL(input.files[0]);
         }
 
-        function upscaleImage(canvas, widthInput, heightInput) {
+        function upscaleImage(canvas) {
             const scaledCanvas = document.createElement("canvas");
             const ctx = scaledCanvas.getContext("2d");
 
-            scaledCanvas.width = widthInput * 128;
-            scaledCanvas.height = heightInput * 128;
+            const scaledWidth = widthInput * 128;
+            const scaledHeight = heightInput * 128;
+
+            scaledCanvas.width = scaledWidth;
+            scaledCanvas.height = scaledHeight;
             ctx.imageSmoothingEnabled = false;
-            ctx.drawImage(canvas, 0, 0, scaledCanvas.width, scaledCanvas.height);
+            ctx.drawImage(canvas, 0, 0, scaledWidth, scaledHeight);
+
             return scaledCanvas;
         }
 
         function downloadImage() {
-            var img = document.getElementById("scaled-image");
+            const img = document.getElementById("painting");
 
             fetch(img.src)
                 .then((response) => response.blob())
                 .then((blob) => {
-                    var link = document.createElement("a");
+                    const link = document.createElement("a");
                     link.href = URL.createObjectURL(blob);
-                    var trimmedFilename = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "")
-                    var imgName =
-                        trimmedFilename +
-                        "_" +
-                        document.getElementById("width-input").value +
-                        "x" +
-                        document.getElementById("height-input").value +
-                        ".jpg";
+                    const trimmedFilename = document.getElementById("image-file").files[0].name.replace(/\.[^/.]+$/, "");
+                    const imgName =
+                        `${trimmedFilename}_${widthInput}x${heightInput}.jpg`;
                     link.download = imgName;
                     link.click();
                 });
         }
+
+        function initialize() {
+            convertToPainting();
+        }
+        window.addEventListener("load", initialize);
+        
     </script>
 </head>
 
@@ -85,19 +99,19 @@
         <h2>by Blanc</h2>
         <div class="image-input">
             <label for="image-file">Select an Image:</label>
-            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event)" />
+            <input type="file" id="image-file" accept="image/*" onchange="loadImage(event);" />
         </div>
         <h3><b>Select Painting Dimensions (Max of 16):</b></h3>
         <form id="dimension-input" autocomplete="off">
             <div class="input-group">
                 <label for="width-input">Block Width:</label>
                 <input type="number" id="width-input" min="1" max="16" placeholder="Enter width"
-                    onchange="convertToPainting()" />
+                    onchange="convertToPainting();" />
             </div>
             <div class="input-group">
                 <label for="height-input">Block Height:</label>
                 <input type="number" id="height-input" min="1" max="16" placeholder="Enter height"
-                    onchange="convertToPainting()" />
+                    onchange="convertToPainting();" />
             </div>
         </form>
         <div class="image-container">
@@ -108,7 +122,7 @@
                 </div>
                 <div>
                     <h4>Painting</h4>
-                    <img id="scaled-image" />
+                    <img id="painting" />
                     <div class="button-container">
                         <br>
                         <button onclick="downloadImage()" id="download-button" hidden>Download Painting</button>
