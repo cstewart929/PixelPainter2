@@ -17,6 +17,21 @@
             const validWidth = 1 <= widthInput && widthInput <= 16;
             const validHeight = 1 <= heightInput && heightInput <= 16;
 
+            const widthElement = document.getElementById("width-input");
+            const heightElement = document.getElementById("height-input");
+
+            if(!validWidth){
+                widthElement.style.background="pink";
+            } else {
+                widthElement.style.background="";
+            }
+
+            if(!validHeight){
+                heightElement.style.background="pink";
+            } else {
+                heightElement.style.background="";
+            }
+
             return validWidth && validHeight;
         }
 
