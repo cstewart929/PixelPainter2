@@ -48,6 +48,10 @@
                 img.onload = function () {
                     if (validDimensions()) {
                         convertToPainting();
+                    } else {
+                        const painting = document.getElementById("painting");
+                        painting.src = "";
+                        document.getElementById("download-button").hidden = true;
                     }
                 };
             };
