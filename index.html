@@ -75,6 +75,13 @@
             };
             imageLoaded = true;
             reader.readAsDataURL(input.files[0]);
+
+            // Display the file name
+            const filename = input.files[0].name;
+            const filenameElement = document.getElementById("image-filename");
+            filenameElement.innerText = filename;
+            filenameElement.style.visibility = "visible";
+            document.getElementById("checkmark").style.visibility = "visible";
         }
 
         function upscaleImage(canvas) {
@@ -111,8 +118,9 @@
         function initialize() {
             convertToPainting();
         }
+
         window.addEventListener("load", initialize);
-        
+
     </script>
 </head>
 
@@ -125,9 +133,12 @@
             <div class="image-input">
                 <b><label for="image-file">Select an Image</label></b>
                 <input type="file" id="image-file" accept="image/*" onchange="loadImage(event);" />
+                <div id="image-info">
+                    <span id="image-filename" style="visibility: hidden;"></span>
+                    <span id="checkmark" style="visibility: hidden; color: green;">&#10004;</span>
+                </div>
             </div>
         </div>
-        <br>
         <h3><b>Select Painting Dimensions (Max of 16)</b></h3>
         <form id="dimension-input" autocomplete="off">
             <div class="input-group">
@@ -149,12 +160,10 @@
         <div class="image-container">
             <div class="image-wrapper">
                 <div>
-                    <h4>Original Image</h4>
-                    <img id="original-image" />
+                    <img id="painting" />
                 </div>
                 <div>
-                    <h4>Painting</h4>
-                    <img id="painting" />
+                    <img id="original-image" hidden="true" />
                 </div>
             </div>
             <canvas id="canvas" style="display: none;"></canvas>
