@@ -96,16 +96,31 @@ h3 {
 }
 
 .image-container .image-wrapper {
-    display: flex;
-    justify-content: space-between;
+    display:flex;
+    justify-content: center;
     margin-top: 20px;
+    width: 100%;
+    height: auto;
 }
 
 .image-container .image-wrapper img {
-    width: 45%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
-/* New styles for text scaling */
+#image-info {
+    display: flex;
+    font-size: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#checkmark {
+    margin-left: 5px;
+}
 
 @media screen and (max-width: 600px) {
     h1 {
