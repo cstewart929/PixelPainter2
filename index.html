@@ -9,6 +9,8 @@
     <script>
         let widthInput;
         let heightInput;
+        let dimensionsVerified;
+        let imageLoaded;
 
         function validDimensions() {
             widthInput = parseInt(document.getElementById("width-input").value);
@@ -32,11 +34,12 @@
                 heightElement.style.background = "";
             }
 
+            dimensionsVerified = validWidth && validHeight;
             return validWidth && validHeight;
         }
 
         function convertToPainting() {
-            if (!validDimensions()) {
+            if (!validDimensions() || !imageLoaded) {
                 return;
             }
 
@@ -70,6 +73,7 @@
                     }
                 };
             };
+            imageLoaded = true;
             reader.readAsDataURL(input.files[0]);
         }
 
