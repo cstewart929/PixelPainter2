@@ -1,12 +1,31 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-color: #c3ffeb;
     margin: 0;
     padding: 20px;
+    overflow-y: scroll;
+}
+
+.container {
+    max-width: 70%;
+    margin: 0 auto;
+    background-color: #f1fffe;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
 h1 {
-    text-align: center;
     font-size: 2rem;
     color: #303030;
     margin-top: 0;
@@ -14,11 +33,10 @@ h1 {
 }
 
 h2 {
-    text-align: center;
     font-size: 1rem;
     color: #424242;
-    margin-top: 1px;
-    margin-bottom: 25px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 h3 {
@@ -27,19 +45,14 @@ h3 {
     margin-bottom: 20px;
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #f1fffe;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.input-container {
+    margin-bottom: 20px;
 }
 
 .image-input {
     text-align: center;
     font-size: 1.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .input-container input[type="file"] {
@@ -48,7 +61,7 @@ h3 {
 
 .input-container label {
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 1.2rem;
     background-color: #b3e5fc;
     color: #323232;
     border: none;
@@ -58,6 +71,12 @@ h3 {
 
 .input-container label:hover {
     background-color: #e1f7fc;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .input-group label {
@@ -72,7 +91,9 @@ h3 {
     padding: 8px;
     border: 1px solid #bbb;
     border-radius: 3px;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    max-width: 45%;
 }
 
 .button-container {
@@ -95,23 +116,26 @@ h3 {
     background-color: #e1f7fc;
 }
 
-.image-container .image-wrapper {
-    display:flex;
-    justify-content: center;
+.image-container {
+    text-align: center;
     margin-top: 20px;
-    width: 100%;
-    height: auto;
+}
+
+.image-container .image-wrapper {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .image-container .image-wrapper img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
 }
 
 #image-info {
     display: flex;
-    font-size: 15px;
+    font-size: 1.2rem;
     font-family: 'Times New Roman', Times, serif;
     align-items: center;
     justify-content: center;
@@ -120,6 +144,8 @@ h3 {
 
 #checkmark {
     margin-left: 5px;
+    visibility: hidden;
+    color: green;
 }
 
 @media screen and (max-width: 600px) {
@@ -148,7 +174,7 @@ h3 {
     }
 
     .input-group input[type="number"] {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
     .button-container button {
