@@ -3,6 +3,7 @@ body {
     background-color: #c3ffeb;
     margin: 0;
     padding: 20px;
+    overflow-y: scroll;
 }
 
 h1 {
