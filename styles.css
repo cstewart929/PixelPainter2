@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 70%;
+    max-width: 90%;
     margin: 0 auto;
     background-color: #f1fffe;
     padding: 10px;
@@ -17,7 +17,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
 }
 
 header {
@@ -51,7 +50,7 @@ h3 {
 
 .image-input {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 0;
 }
 
@@ -93,7 +92,7 @@ h3 {
     border-radius: 3px;
     font-size: 1.2rem;
     box-sizing: border-box;
-    max-width: 45%;
+    max-width: 10rem;
 }
 
 .button-container {
