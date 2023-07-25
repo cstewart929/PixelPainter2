@@ -7,7 +7,8 @@ body {
 }
 
 .container {
-    max-width: 90%;
+    min-width: 50%;
+    max-width: fit-content;
     margin: 0 auto;
     background-color: #f1fffe;
     padding: 10px;
@@ -21,7 +22,8 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-top: 25px;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -51,7 +53,7 @@ h3 {
 .image-input {
     text-align: center;
     font-size: 1.8rem;
-    margin-bottom: 0;
+    margin-bottom: 0px;
 }
 
 .input-container input[type="file"] {
@@ -118,16 +120,29 @@ h3 {
 .image-container {
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .image-container .image-wrapper {
     display: flex;
     justify-content: center;
     overflow: hidden;
+    max-width: 100%;
+}
+
+.image-container .image-wrapper .painting-wrapper {
+    min-width: 28vw;
+    min-height: 28vh;
+    max-width: 28vw;
+    max-height: 28vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .image-container .image-wrapper img {
     max-width: 100%;
+    max-height: 100%;
     height: auto;
     object-fit: contain;
 }
