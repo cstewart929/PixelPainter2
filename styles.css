@@ -189,6 +189,7 @@ h3 {
 
     .input-group input[type="number"] {
         font-size: 0.9rem;
+        padding: 8px 12px;
     }
 
     .button-container button {
