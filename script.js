@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
         imageLoaded = true;
         reader.readAsDataURL(input.files[0]);
 
-        // Display the file name
         const filename = input.files[0].name;
         const filenameElement = document.getElementById("image-filename");
         filenameElement.innerText = filename;
